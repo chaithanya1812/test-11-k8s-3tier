@@ -1,47 +1,99 @@
-apiVersion: v1
-kind: ReplicationController
-metadata:
- name: nginxpod
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: frontend
  namespace: test-cs
 spec:
- replicas: 2
- selector:
-   app: ready
- template:
-   metadata:
-    labels:
-     app: ready
+  replicas: 2
+  selector: 
+   matchLabels:
+     app: frontend
+  template:
+   metadata: 
+    labels: 
+     app: frontend
    spec:
-    containers:
-     - name: nginxpod
-       image: nginx
+     containers:
+     - name: springcon
+       image: chaitu1812/springboot:v2.0
        ports:
-        - containerPort: 80
-       livenessProbe:
-        exec:
-         command:
-          - cat
-          - /usr/share/nginx/html/index.html
-        initialDelaySeconds: 10
-        periodSeconds: 5
-       readinessProbe:
-        exec:
-         command:
-          - cat
-          - /usr/share/nginx/html/index.html
-        initialDelaySeconds: 15
-        periodSeconds: 5
-
+        - containerPort: 8080
+       env:
+       - name: MONGO_DB_HOSTNAME
+         value: databasesvc
+       - name: MONGO_DB_USERNAME
+         value: chaitu123
+       - name: MONGO_DB_PASSWORD
+         value: chaitu1812    
 ---
 apiVersion: v1
 kind: Service
 metadata:
- name: podservice
+ name: frontendsvc
  namespace: test-cs
 spec:
- type: ClusterIP
- selector:
-  app: ready
- ports:
- - port: 8080
-   targetPort: 80
+  type: NodePort
+  selector:
+   app: frontend
+  ports:
+  - port: 8081
+    targetPort: 8080
+    nodePort: 33226
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+ name: database  
+ namespace: test-cs
+spec:
+  replicas: 1
+  selector:
+   matchLabels:
+     app: database
+  template:
+   metadata:
+    labels:
+      app: database    
+   spec: 
+    containers:
+    - name: databasecon
+      image: mongo
+      ports:
+       - containerPort: 27017
+      env: 
+      - name: MONGO_INITDB_ROOT_USERNAME
+        value: chaitu123
+      - name: MONGO_INITDB_ROOT_PASSWORD
+        value: chaitu1812
+      volumeMounts:  
+      - name: backendvol
+        mountPath: /data/db   
+    volumes:
+    - name: backendvol  
+      persistentVolumeClaim:
+       claimName: chaituvol           
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: chaituvol
+ namespace: test-cs
+spec:
+ resources:
+  requests:
+   storage: 2Gi
+ accessModes:
+  - ReadWriteMany
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: databasesvc
+ namespace: test-cs
+spec:
+  type: ClusterIP
+  selector:
+   app: database
+  ports:
+  - port: 27017
+    targetPort: 27017
