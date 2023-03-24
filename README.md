@@ -101,3 +101,28 @@ kubectl get all -n kube-system
 
 # K8s-Cluster setup is done!!!!!!!!!!!!!!!!
 # --------------------------------------------------
+# In k8s cluster we using storage classes resource for creating Persistent volumes dynamically provisioning in nfs(network file system).
+#Launch  1-instance with required cpu,memory and make that as nfs-sever
+![k8snfsserver](https://user-images.githubusercontent.com/111736742/227645773-bd7cca74-1175-4a87-9e12-66294c9ce10d.png)
+## nfs-Server-Installation
+```bash
+    sudo su -
+    yum update -y
+    yum install nfs-utils -y
+    systemctl start nfs-server.service
+    mkdir -p  /nfs/nfs_tier
+    chown -R nobody:nobody  /nfs/nfs_tier
+    vi /etc/exports
+    #------------------------------------------
+    #in exports file place the following content and then exit
+    /nfs/nfs_tier *(rw,sync,no_all_squash,no_root_squash)
+    #------------------------------------------
+    exportfs -arv
+    exportfs -s
+    systemctl restart nfs-server.service
+```
+## nfs-client-Installation
+#Note:-Execute these coomand on k8s nodes
+```bash
+  yum install install nfs-utils nfs4-acl-tools -y
+```
