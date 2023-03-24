@@ -38,7 +38,7 @@ spec:
   ports:
   - port: 8081
     targetPort: 8080
-    nodePort: 33226
+    nodePort: 332256
 ---
 apiVersion: apps/v1
 kind: ReplicaSet
