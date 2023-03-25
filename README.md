@@ -1,4 +1,5 @@
 # Project-11(Deploy 3 tier java-application into K8S)
+![k8sproject](https://user-images.githubusercontent.com/111736742/227664484-d83d8f4e-8f91-4e8f-aa65-1239369df768.jpg)
 # K8S-Cluster-Setup with RHEL
 ![k8s-installation](https://user-images.githubusercontent.com/111736742/227599293-3d912943-77a7-4cfe-9b6f-9558b998c2e0.jpg)
 ## K8S-Installation
@@ -126,3 +127,69 @@ kubectl get all -n kube-system
 ```bash
   yum install install nfs-utils nfs4-acl-tools -y
 ```
+# Sonarqube download & Installation
+```bash
+yum update -y
+yum install java -y
+cd /opt
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.9.10.61524.zip
+unzip sonarqube-8.9.10.61524.zip
+mv sonarqube-8.9.10.61524 sonarqube
+useradd chaitu
+passwd chaitu
+chown -R chaitu:chaitu sonarqube
+cd /opt/sonarqube/bin/linux-x86-64
+vi sonar.sh 
+--------------
+edit this
+#RUN_AS_USER=
+RUN_AS_USER=chaitu
+su - chaitu
+[And start SonarQube]
+cd /opt/sonarqube/bin/linux-x86-64
+sh sonar.sh start
+sh sonar.sh status
+ip:9000
+```
+# Nexus download & Installation
+```bash
+yum install java-1.8* -y
+cd /opt
+wget https://download.sonatype.com/nexus/3/nexus-3.47.1-01-unix.tar.gz
+tar -xvzf  nexus-3.47.1-01-unix.tar.gz
+mv nexus-3.47.1-01 nexus
+useradd chaitu
+passwd chaitu
+chown -R chaitu:chaitu nexus
+chown -R chaitu:chaitu sonatype-work
+cd /opt/nexus/bin
+vi nexus.rc
+--------edit---------
+#run_as_user="chaitu"
+----------edit--------
+sh nexus start
+sh nexus status
+ip:8081
+```
+# Jenkins-Dashboard
+![k8sjenkinsdashn](https://user-images.githubusercontent.com/111736742/227663263-ec5db860-46b3-48b9-99fc-d0720e656a60.png)
+# Sonarqube-Report
+![k8ssonarqube](https://user-images.githubusercontent.com/111736742/227663386-7edcd821-55e7-41b2-914a-8ae093f86aab.png)
+# Nexus-Artifact Storge
+![k8snexus](https://user-images.githubusercontent.com/111736742/227663432-e9f58003-f7d9-443c-b850-ce56b4375899.png)
+# Docker-Hub Image
+![k8sdockerhub](https://user-images.githubusercontent.com/111736742/227663608-34ae0c1a-7277-440b-ba22-90d270de9cc1.png)
+# K8S-Control Plane
+![k8ssecond](https://user-images.githubusercontent.com/111736742/227664236-21661d05-7a2c-4244-944d-9fca364b8906.png)
+# nfs-server dynamically created persistent volume
+![k8snfsvolume](https://user-images.githubusercontent.com/111736742/227664353-5e2759b8-105e-461b-acc3-ca15be059dbc.png)
+# Final - Output without entering data!
+![k8sbeforedat](https://user-images.githubusercontent.com/111736742/227663801-f1210588-6b6c-4098-81e4-ef56111c4740.png)
+# Final - Output After entering data!
+![k8sdataenter](https://user-images.githubusercontent.com/111736742/227663823-3316f58d-1d89-4ab7-840d-6fa70a20b58b.png)
+# Even though our mongo database pod is delted we have our data
+![k8snewpod](https://user-images.githubusercontent.com/111736742/227664108-8fe03eb2-b50a-417a-840e-889794075d34.png)
+![k8sdataenter](https://user-images.githubusercontent.com/111736742/227664387-2e03ed27-b040-447e-84e3-c51b00ecc205.png)
+
+
+
