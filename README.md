@@ -180,7 +180,7 @@ ip:8081
 # Docker-Hub Image
 ![k8sdockerhub](https://user-images.githubusercontent.com/111736742/227663608-34ae0c1a-7277-440b-ba22-90d270de9cc1.png)
 # K8S-Control Plane
-![k8ssecond](https://user-images.githubusercontent.com/111736742/227664236-21661d05-7a2c-4244-944d-9fca364b8906.png)
+![k8sman](https://user-images.githubusercontent.com/111736742/227665740-4b50652d-d2dd-478f-a5de-42cbbe557250.png)
 # nfs-server dynamically created persistent volume
 ![k8snfsvolume](https://user-images.githubusercontent.com/111736742/227664353-5e2759b8-105e-461b-acc3-ca15be059dbc.png)
 # Final - Output without entering data!
@@ -188,7 +188,9 @@ ip:8081
 # Final - Output After entering data!
 ![k8sdataenter](https://user-images.githubusercontent.com/111736742/227663823-3316f58d-1d89-4ab7-840d-6fa70a20b58b.png)
 # Even though our mongo database pod is delted we have our data
-![k8snewpod](https://user-images.githubusercontent.com/111736742/227664108-8fe03eb2-b50a-417a-840e-889794075d34.png)
+![k8snewpod](https://user-images.githubusercontent.com/111736742/227665413-64ad67f8-a01f-4f4f-a5f5-73698817c54c.png)
+# New mongo pod is created  && we have our data
+![k8smanager](https://user-images.githubusercontent.com/111736742/227665561-0c05e4ca-a883-4b3d-b0e5-33c5990abb0c.png)
 ![k8sdataenter](https://user-images.githubusercontent.com/111736742/227664387-2e03ed27-b040-447e-84e3-c51b00ecc205.png)
 
 
